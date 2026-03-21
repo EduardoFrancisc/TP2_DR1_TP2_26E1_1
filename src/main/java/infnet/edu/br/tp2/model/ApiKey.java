@@ -14,7 +14,6 @@ import java.time.OffsetDateTime;
         }
 )
 public class ApiKey {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
