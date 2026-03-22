@@ -39,10 +39,17 @@ public class AventuraService {
         );
     }
 
-    /**
-     * Regra: Um aventureiro não pode existir sem organização.
-     * Regra: Nível mínimo permitido: 1.
-     */
+    public Page<AventureiroSummaryDTO> buscarPorNome(String nome, Pageable pageable) {
+        return aventureiroRepository.findByNomeContainingIgnoreCase(nome, pageable)
+                .map(a -> new AventureiroSummaryDTO(
+                        a.getId(),
+                        a.getNome(),
+                        a.getClasse().name(),
+                        a.getNivel(),
+                        a.getAtivo()
+                ));
+    }
+
     @Transactional
     public Aventureiro criarAventureiro(Aventureiro aventureiro) {
         if (aventureiro.getOrganizacao() == null) {
@@ -80,12 +87,6 @@ public class AventuraService {
         return participacaoRepository.obterMetricasPorPeriodo(inicio, fim);
     }
 
-    /**
-     * Regra: Um mesmo aventureiro não pode participar mais de uma vez da mesma missão.
-     * Regra: Apenas aventureiros da mesma organização da missão podem participar.
-     * Regra: Um aventureiro inativo não pode ser associado.
-     * Regra: A missão deve estar em estado compatível (PLANEJADA ou EM_ANDAMENTO).
-     */
     @Transactional
     public ParticipacaoMissao registrarParticipacao(Long missaoId, Long aventureiroId, PapelMissao papel, BigDecimal recompensa) {
 
@@ -125,5 +126,9 @@ public class AventuraService {
         participacao.setMvp(false);
 
         return participacaoRepository.save(participacao);
+    }
+
+    public List<AventureiroRankingDTO> obterRanking(OffsetDateTime inicio, OffsetDateTime fim) {
+        return participacaoRepository.obterRanking(inicio, fim);
     }
 }
