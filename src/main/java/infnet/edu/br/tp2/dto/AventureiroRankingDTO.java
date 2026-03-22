@@ -7,5 +7,5 @@ public record AventureiroRankingDTO(
         String nome,
         Long totalParticipacoes,
         BigDecimal somaRecompensas,
-        Long totalMVPs // O SUM(CASE...) de booleanos no Postgres/Hibernate costuma retornar Long
+        Long totalMVPs
 ) {}

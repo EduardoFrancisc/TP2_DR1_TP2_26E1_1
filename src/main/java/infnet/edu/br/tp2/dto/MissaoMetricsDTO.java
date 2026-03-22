@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 
 public record MissaoMetricsDTO(
         String titulo,
-        StatusMissao status,       // Alterado de String para o Enum
-        NivelPerigo nivelPerigo,   // Alterado de String para o Enum
+        StatusMissao status,
+        NivelPerigo nivelPerigo,
         Long qtdParticipantes,
         BigDecimal totalRecompensas
 ) {}

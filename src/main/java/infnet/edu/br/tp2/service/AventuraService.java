@@ -61,13 +61,11 @@ public class AventuraService {
         return aventureiroRepository.save(aventureiro);
     }
 
-    // Consulta Operacional: Listagem de Missões
     public Page<MissaoSummaryDTO> listarMissoes(StatusMissao status, NivelPerigo nivel, OffsetDateTime inicio, OffsetDateTime fim, Pageable pageable) {
         return missaoRepository.findByStatusAndNivelPerigoAndCreatedAtBetween(status, nivel, inicio, fim, pageable)
                 .map(m -> new MissaoSummaryDTO(m.getId(), m.getTitulo(), m.getStatus().name(), m.getNivelPerigo().name(), m.getCreatedAt()));
     }
 
-    // Consulta Operacional: Detalhamento de Missão com Participantes
     public MissaoDetalheDTO detalharMissao(Long id) {
         Missao m = missaoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Missão não encontrada"));
@@ -82,7 +80,6 @@ public class AventuraService {
         );
     }
 
-    // Relatório Gerencial: Métricas de Missões
     public List<MissaoMetricsDTO> gerarRelatorioMissoes(OffsetDateTime inicio, OffsetDateTime fim) {
         return participacaoRepository.obterMetricasPorPeriodo(inicio, fim);
     }

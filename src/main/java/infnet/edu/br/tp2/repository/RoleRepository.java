@@ -11,14 +11,10 @@ import java.util.Optional;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    // Busca uma role específica pelo nome dentro de uma organização
     Optional<Role> findByOrganizacaoIdAndNome(Long orgId, String nome);
 
-    // Cumpre o requisito: "Listar roles com suas permissions"
-    // O FETCH garante que as permissões venham junto na mesma consulta
     @Query("SELECT r FROM Role r LEFT JOIN FETCH r.permissions WHERE r.organizacao.id = :orgId")
     List<Role> findByOrganizacaoIdWithPermissions(@Param("orgId") Long orgId);
 
-    // Busca todas as roles de uma organização
     List<Role> findByOrganizacaoId(Long orgId);
 }

@@ -30,7 +30,6 @@ public interface ParticipacaoMissaoRepository extends JpaRepository<Participacao
             "ORDER BY COUNT(p) DESC")
     List<AventureiroRankingDTO> obterRanking(OffsetDateTime inicio, OffsetDateTime fim);
 
-    // Relatório de Missões com Métricas (Agregação por Missão)
     @Query("SELECT new infnet.edu.br.tp2.dto.MissaoMetricsDTO(" +
             "p.missao.titulo, p.missao.status, p.missao.nivelPerigo, " +
             "COUNT(p), SUM(COALESCE(p.recompensaOuro, 0))) " +
@@ -39,12 +38,9 @@ public interface ParticipacaoMissaoRepository extends JpaRepository<Participacao
             "GROUP BY p.missao.id, p.missao.titulo, p.missao.status, p.missao.nivelPerigo")
     List<MissaoMetricsDTO> obterMetricasPorPeriodo(OffsetDateTime inicio, OffsetDateTime fim);
 
-    // Essencial para a regra: "A participação é única para o par (Missão, Aventureiro)"
     boolean existsByMissaoIdAndAventureiroId(Long missaoId, Long aventureiroId);
 
-    // Para listar todos os aventureiros de uma missão específica
     List<ParticipacaoMissao> findByMissaoId(Long missaoId);
 
-    // Para listar todas as missões de um aventureiro específico
     List<ParticipacaoMissao> findByAventureiroId(Long aventureiroId);
 }

@@ -18,10 +18,6 @@ public class RelatorioController {
 
     private final AventuraService aventuraService;
 
-    /**
-     * REQUISITO: Ranking de Participação
-     * Baseado em total de participações, recompensas e MVPs por período.
-     */
     @GetMapping("/ranking-aventureiros")
     public ResponseEntity<List<AventureiroRankingDTO>> obterRanking(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime inicio,
@@ -30,10 +26,6 @@ public class RelatorioController {
         return ResponseEntity.ok(aventuraService.obterRanking(inicio, fim));
     }
 
-    /**
-     * REQUISITO: Relatório de Missões com Métricas
-     * Apresenta quantidade de participantes e total de ouro distribuído por missão.
-     */
     @GetMapping("/missoes-metricas")
     public ResponseEntity<List<MissaoMetricsDTO>> gerarRelatorioMissoes(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime inicio,

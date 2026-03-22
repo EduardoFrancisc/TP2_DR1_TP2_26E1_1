@@ -14,10 +14,8 @@ import java.util.List;
 @Repository
 public interface MissaoRepository extends JpaRepository<Missao, Long> {
 
-    // Regra: "Missões pertencem exclusivamente a uma organização"
     List<Missao> findByOrganizacaoId(Long orgId);
 
-    // Busca missões por status (ex: PLANEJADA) para validar novas entradas
     List<Missao> findByOrganizacaoIdAndStatus(Long orgId, StatusMissao status);
 
     Page<Missao> findByStatusAndNivelPerigoAndCreatedAtBetween(

@@ -11,14 +11,10 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    // Essencial para o login e validação de duplicidade
     Optional<Usuario> findByEmail(String email);
 
-    // Cumpre o requisito: "Listar usuários com suas roles"
-    // O 'JOIN FETCH' evita o problema de N+1 consultas no banco
     @Query("SELECT u FROM Usuario u LEFT JOIN FETCH u.roles WHERE u.organizacao.id = :orgId")
     List<Usuario> findByOrganizacaoIdWithRoles(@Param("orgId") Long orgId);
 
-    // Busca usuários por status dentro de uma organização
     List<Usuario> findByOrganizacaoIdAndStatus(Long orgId, String status);
 }
